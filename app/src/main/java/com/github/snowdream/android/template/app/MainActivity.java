@@ -19,13 +19,7 @@ package com.github.snowdream.android.template.app;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import com.github.snowdream.android.template.library.HelloWorldLib;
+import android.view.*;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -44,7 +38,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -72,11 +66,8 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
-            TextView text = (TextView)rootView.findViewById(R.id.content);
-            text.setText(HelloWorldLib.getHelloWorld());
             return rootView;
         }
     }

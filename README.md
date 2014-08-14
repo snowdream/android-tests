@@ -1,26 +1,6 @@
-#android-gradle-template
+#android-tests
 
-a template for android with gradle
-
-##Features
-* Easy to develop the android apps or libraries with gradle
-* Support publishing an aar/jar file to Maven Central with Gradle
-* Support the library androidannotations,[https://github.com/excilys/androidannotations](https://github.com/excilys/androidannotations)
-* Configuring the build environment via gradle.properties
-
-##Requirements
-* Gradle 1.10, 1.11 or 1.12 with the plugin 0.10.0
-* SDK with Build Tools 19.1+. Some features may require a more recent version.
-
-##HOW TO
-Learn how to develop with IntelliJ/Android Studio and Gradle.
-[http://snowdream.github.io/blog/android/2013/12/25/how-to-develop-with-android-gradle-template/](http://snowdream.github.io/blog/android/2013/12/25/how-to-develop-with-android-gradle-template/)
-
-##Gradle Plugin User Guide
-[http://tools.android.com/tech-docs/new-build-system/user-guide](http://tools.android.com/tech-docs/new-build-system/user-guide)
-
-##Gradle User Guide
-[http://www.gradle.org/docs/current/userguide/userguide.html](http://www.gradle.org/docs/current/userguide/userguide.html)
+android tests demo
 
 ##License
 ```
