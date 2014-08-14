@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.snowdream.android.template.app;
+package com.github.snowdream.android.tests;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
