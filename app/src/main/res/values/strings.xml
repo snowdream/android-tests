@@ -17,7 +17,7 @@
 
 <resources>
 
-    <string name="app_name">android_gradle_template</string>
+    <string name="app_name">AndroidTest</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
