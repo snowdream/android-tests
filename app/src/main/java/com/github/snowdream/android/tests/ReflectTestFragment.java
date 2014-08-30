@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.github.snowdream.android.util.Log;
+import org.abstractmeta.reflectify.*;
+import org.abstractmeta.reflectify.runtime.ReflectifyRuntimeRegistry;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -40,8 +42,9 @@ public class ReflectTestFragment extends BaseFragment {
         textView.append(TEST_TIMES + " " + tag + ": " + (end - start) + " milliseconds." + "\n");
         Log.i(TEST_TIMES + " " + tag + ": " + (end - start) + " milliseconds.");
     }
+
     public void Log(final String message) {
-        textView.append(message+"\n");
+        textView.append(message + "\n");
         Log.i(message);
     }
 
@@ -96,7 +99,7 @@ public class ReflectTestFragment extends BaseFragment {
                 e.printStackTrace();
             }
         }
-        
+
         //reflect cache the field and pass access check
         {
             try {
@@ -116,6 +119,66 @@ public class ReflectTestFragment extends BaseFragment {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
+        }
+
+        //reflect the field ReflectifyRegistry get
+        {
+            ReflectifyRegistry registry = new ReflectifyRuntimeRegistry();
+            Reflectify<Person> reflectify = registry.get(Person.class);
+            Person person = new Person();
+
+            long start = System.currentTimeMillis();
+            for (int i = 0; i < TEST_TIMES; i++) {
+                Accessor<Person, String> nameAccessor = reflectify.getAccessor(String.class, "name");
+                nameAccessor.get(person);
+            }
+            long end = System.currentTimeMillis();
+            Log("reflect field ReflectifyRegistry get calls", start, end);
+        }
+
+        //reflect cache the field ReflectifyRegistry get
+        {
+            ReflectifyRegistry registry = new ReflectifyRuntimeRegistry();
+            Reflectify<Person> reflectify = registry.get(Person.class);
+            Person person = new Person();
+            Accessor<Person, String> nameAccessor = reflectify.getAccessor(String.class, "name");
+
+            long start = System.currentTimeMillis();
+            for (int i = 0; i < TEST_TIMES; i++) {
+                nameAccessor.get(person);
+            }
+            long end = System.currentTimeMillis();
+            Log("reflect cache field ReflectifyRegistry get calls", start, end);
+        }
+
+        //reflect the field ReflectifyRegistry set
+        {
+            ReflectifyRegistry registry = new ReflectifyRuntimeRegistry();
+            Reflectify<Person> reflectify = registry.get(Person.class);
+            Person person = new Person();
+
+            long start = System.currentTimeMillis();
+            for (int i = 0; i < TEST_TIMES; i++) {
+                Mutator<Person, String> nameMutator = reflectify.getMutator(String.class, "name");
+                nameMutator.set(person, "snowdream");
+            }
+            long end = System.currentTimeMillis();
+            Log("reflect field ReflectifyRegistry set calls", start, end);
+        }
+
+        //reflect cache the field ReflectifyRegistry set
+        {
+            ReflectifyRegistry registry = new ReflectifyRuntimeRegistry();
+            Reflectify<Person> reflectify = registry.get(Person.class);
+            Person person = new Person();
+            Mutator<Person, String> nameMutator = reflectify.getMutator(String.class, "name");
+
+            long start = System.currentTimeMillis();
+            for (int i = 0; i < TEST_TIMES; i++) {
+                nameMutator.set(person, "snowdream");
+            }
+            long end = System.currentTimeMillis();
+            Log("reflect cache field ReflectifyRegistry set calls", start, end);
         }
     }
 
@@ -141,8 +204,8 @@ public class ReflectTestFragment extends BaseFragment {
                 Class<?> clazz = person.getClass();
                 long start = System.currentTimeMillis();
                 for (int i = 0; i < TEST_TIMES; i++) {
-                    Method method = clazz.getDeclaredMethod("setName",String.class);
-                    method.invoke(person,"snowdream");
+                    Method method = clazz.getDeclaredMethod("setName", String.class);
+                    method.invoke(person, "snowdream");
                 }
                 long end = System.currentTimeMillis();
                 Log("reflect method calls", start, end);
@@ -198,6 +261,43 @@ public class ReflectTestFragment extends BaseFragment {
                 e.printStackTrace();
             }
         }
+
+        //reflect ReflectifyRegistry
+        {
+            ReflectifyRegistry registry = new ReflectifyRuntimeRegistry();
+            Reflectify<Person> reflectify = registry.get(Person.class);
+            Person person = new Person();
+            long start = System.currentTimeMillis();
+            for (int i = 0; i < TEST_TIMES; i++) {
+                MethodInvoker<Person, Void> setNameInvoker = reflectify.getMethodInvoker(void.class, "setName", String.class);
+
+                //method parameter setting starting form index 0 for 1st parameter
+                setNameInvoker.getParameterSetter(0).set("snowdream");
+
+                setNameInvoker.invoke(person);
+            }
+            long end = System.currentTimeMillis();
+            Log("reflect ReflectifyRegistry method calls", start, end);
+        }
+
+        //reflect cache the method ReflectifyRegistry
+        {
+            ReflectifyRegistry registry = new ReflectifyRuntimeRegistry();
+            Reflectify<Person> reflectify = registry.get(Person.class);
+            MethodInvoker<Person, Void> setNameInvoker = reflectify.getMethodInvoker(void.class, "setName", String.class);
+            Person person = new Person();
+
+            long start = System.currentTimeMillis();
+            for (int i = 0; i < TEST_TIMES; i++) {
+                //method parameter setting starting form index 0 for 1st parameter
+                setNameInvoker.getParameterSetter(0).set("snowdream");
+
+                setNameInvoker.invoke(person);
+            }
+            long end = System.currentTimeMillis();
+            Log("reflect  ReflectifyRegistry cache method calls", start, end);
+        }
+
     }
 
     public void ConstructTest() {
@@ -356,6 +456,34 @@ public class ReflectTestFragment extends BaseFragment {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
+        }
+
+        //reflect Person.class ReflectifyRegistry
+        {
+            ReflectifyRegistry registry = new ReflectifyRuntimeRegistry();
+            Reflectify<Person> reflectify = registry.get(Person.class);
+
+            long start = System.currentTimeMillis();
+            for (int i = 0; i < TEST_TIMES; i++) {
+                Reflectify.Provider<Person> provider = reflectify.getProvider();
+                Person person = provider.get();
+            }
+            long end = System.currentTimeMillis();
+            Log("reflect ReflectifyRegistry Construct Person.class calls", start, end);
+        }
+
+        //reflect cache Person.class  ReflectifyRegistry
+        {
+            ReflectifyRegistry registry = new ReflectifyRuntimeRegistry();
+            Reflectify<Person> reflectify = registry.get(Person.class);
+            Reflectify.Provider<Person> provider = reflectify.getProvider();
+
+            long start = System.currentTimeMillis();
+            for (int i = 0; i < TEST_TIMES; i++) {
+                Person person = provider.get();
+            }
+            long end = System.currentTimeMillis();
+            Log("reflect ReflectifyRegistry  cache Construct Person.class calls", start, end);
         }
     }
 
