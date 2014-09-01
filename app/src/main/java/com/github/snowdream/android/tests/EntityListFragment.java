@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -35,6 +34,6 @@ public class EntityListFragment extends BaseFragment {
 
     @Override
     protected List<Entity> createEntities() {
-        return EntityFractory.createEntities(ReflectTestFragment.class);
+        return EntityFractory.createEntities(ReflectTestFragment.class,AnnotationTestFragment.class);
     }
 }

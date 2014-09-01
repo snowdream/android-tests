@@ -18,6 +18,7 @@ public class Person {
         return name;
     }
 
+    @Default("snowdream")
     public void setName(String name) {
         this.name = name;
     }
