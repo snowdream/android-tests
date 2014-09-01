@@ -77,7 +77,7 @@ public class AnnotationTestFragment extends BaseFragment {
                     DefaultAnnoation.value();
                 }
                 long end = System.currentTimeMillis();
-                Log("isAnnotationPresent calls", start, end);
+                Log("getAnnotation calls", start, end);
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
             }
@@ -96,7 +96,7 @@ public class AnnotationTestFragment extends BaseFragment {
                     DefaultAnnoation.value();
                 }
                 long end = System.currentTimeMillis();
-                Log("isAnnotationPresent calls", start, end);
+                Log("getAnnotation cache  calls", start, end);
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
             }
