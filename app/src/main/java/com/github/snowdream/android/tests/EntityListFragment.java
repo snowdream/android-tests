@@ -34,6 +34,6 @@ public class EntityListFragment extends BaseFragment {
 
     @Override
     protected List<Entity> createEntities() {
-        return EntityFractory.createEntities(ReflectTestFragment.class,AnnotationTestFragment.class);
+        return EntityFractory.createEntities(ReflectTestFragment.class,AnnotationTestFragment.class,DynamicProxyTestFragment.class);
     }
 }
